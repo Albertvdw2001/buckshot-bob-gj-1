@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "godot-mcp-pro": {
+      "command": "node",
+      "args": ["C:/Users/alber/Desktop/Godot projects/gamejam-1/2d-ropguelike-gj1/server/build/index.js"]
+    }
+  }
+}

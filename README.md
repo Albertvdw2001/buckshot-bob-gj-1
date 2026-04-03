@@ -15,5 +15,4 @@ to being able to fire an insanely high amount of shells an avoiding being overru
 - Genre: rogue-like
 - Started: around the end of March 2026
 - Purpose: Actually finishing a game for the first time by having an enforced deadline
-- Goal: Have a playable game before deadline ()
-
+- Goal: Have a playable game before deadline (4 May 2026)

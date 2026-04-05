@@ -1,69 +1,81 @@
 extends Node2D
 
-@export var projectile: PackedScene
-@export var is_static_projectile: bool # melee
-# whether an extension with a non-static projectile is automatic (hold attack) or semi-automatic (fire one per attack press)
-@export var is_automatic: bool = true
-@export var fire_rate_per_sec: float = 3
+@export var bullet_scene: PackedScene
 
 # this value should be the name of the attack animation connected to the sprite
 @export var shoot_animation: String = "attack"
 @export var default_animation: String = "default"
 
-@onready var projectile_slot: Node2D = $ProjectileSlot
+@onready var shell_spawner: Node2D = $ShellSpawner
 @onready var anim_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 var fire_timer: float = 0.0
-var amount_bullets = 1
+@export var amount_shells = 2
+@export var total_shot_spread: float = 30
 var mouse_pos
 var is_shooting: bool = false
+
 
 func _ready() -> void:
 	anim_sprite.animation_finished.connect(_on_animation_finished)
 
 func _physics_process(delta: float) -> void:
 	apply_look_point_direction()
-	if is_automatic and is_automatic_interval() and Input.is_action_pressed("attack"):
-		fire_timer += delta
-		spawn_projectile()
-	elif Input.is_action_just_pressed("attack") and not is_shooting:
+	if Input.is_action_just_pressed("attack") and not is_shooting:
 		shoot()
 
 func shoot():
-	if (!is_shooting and anim_sprite.animation != shoot_animation):
+	if (not is_shooting) and (anim_sprite.animation != shoot_animation):
+		shoot_shells()
 		is_shooting = true
 		anim_sprite.play(shoot_animation)
-		#anim_sprite.animation = default_animation
 
-# points extension front x to where mouse is
+# points shotgun front x to where mouse is and applies vertical flip to avoid being upside down
 func apply_look_point_direction():
 	look_at(get_global_mouse_position())
 	var relative_mouse_pos = Node2dUtils.get_relative_global_mouse_pos(self)
 	anim_sprite.flip_v = relative_mouse_pos.x < 0
 
-
-# spawns (or rather "instantiates") a new instance of object assigned to 'projectile'
-# inside 'projectile_slot'
-func spawn_projectile():
-	var new_projectile = projectile.instantiate() as ProjectileBase
-	new_projectile.is_static = is_static_projectile
-	if is_static_projectile:
-		#new_projectile.position = projectile_slot.position
-		projectile_slot.add_child(new_projectile)
+func shoot_shells():
+	var deg_between_shells = calc_deg_between_shells(amount_shells)
+	var max_angle_offset = 0
+	var min_angle_offset = 0
+	if amount_shells % 2 == 0:
+		for shell_num in range(amount_shells):
+			var direction = Vector2.RIGHT.rotated(shell_spawner.global_rotation) #straight
+			if shell_num % 2 == 0:
+				max_angle_offset += deg_between_shells
+				direction = Vector2.RIGHT.rotated(shell_spawner.global_rotation + deg_to_rad(max_angle_offset))
+			else:
+				min_angle_offset -= deg_between_shells
+				direction = Vector2.RIGHT.rotated(shell_spawner.global_rotation + deg_to_rad(min_angle_offset))
+			spawn_shell(direction)
 	else:
-		new_projectile.direction = Vector2.RIGHT.rotated(projectile_slot.global_rotation)
-		new_projectile.global_position = projectile_slot.global_position
-		get_tree().current_scene.add_child(new_projectile)
+		for shell_num in range(amount_shells):
+			var direction = Vector2.RIGHT.rotated(shell_spawner.global_rotation) #straight
+			if shell_num != 1:
+				if shell_num % 2 == 0:
+					max_angle_offset += deg_between_shells
+					direction = Vector2.RIGHT.rotated(shell_spawner.global_rotation + deg_to_rad(max_angle_offset))
+				else:
+					min_angle_offset -= deg_between_shells
+					direction = Vector2.RIGHT.rotated(shell_spawner.global_rotation + deg_to_rad(min_angle_offset))
+			spawn_shell(direction)
 
+# spawns ("instantiates") a new instance of object assigned to bullet_scene
+# inside shell_spawnera
+func spawn_shell(direction = null):
+	if not direction:
+		direction = Vector2.RIGHT.rotated(shell_spawner.global_rotation)
+	var new_shell = bullet_scene.instantiate() as ShotgunShell
+	new_shell.direction = direction
+	new_shell.global_position = shell_spawner.global_position
+	get_tree().current_scene.add_child(new_shell)
 
-# helper method that checks whether an automatic projectile should be fired or not
-# returns true if enough time has passed since the last shot (based on fire_rate_per_sec)
-func is_automatic_interval() -> bool:
-	var interval = 1.0 / fire_rate_per_sec
-	if fire_timer >= interval:
-		fire_timer = 0.0
-		return true
-	return false
+# helper method for calculating spread between shells based on amount_shells
+func calc_deg_between_shells(amount_shells: int) -> float:
+	#var half = total_shot_spread / 2
+	return total_shot_spread / amount_shells
 
 
 func _on_animation_finished():

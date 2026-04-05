@@ -57,7 +57,6 @@ animations = [{
 [node name="Shotgun" type="Node2D"]
 script = ExtResource("1_278ir")
 bullet_scene = ExtResource("2_uukpr")
-amount_shells = 8
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-12, 0)

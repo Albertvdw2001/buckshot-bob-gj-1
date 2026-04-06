@@ -10,7 +10,7 @@ extends Node2D
 @onready var anim_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 var fire_timer: float = 0.0
-@export var amount_shells = 2
+@export var amount_shells = 1000000000
 @export var total_shot_spread: float = 30
 var mouse_pos
 var is_shooting: bool = false

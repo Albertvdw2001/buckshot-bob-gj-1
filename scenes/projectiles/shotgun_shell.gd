@@ -1,13 +1,15 @@
 extends Area2D
 class_name ShotgunShell
 
+@onready var collision: CollisionPolygon2D = $CollisionPolygon2D
+
 @export var movement_speed: float = 500
-@export var damage: int = 100
+@export var damage: int = 20
 
 var direction: Vector2 = Vector2.RIGHT
 
-#func _ready() -> void:
-	#body_entered.connect(on_entered)
+func _ready() -> void:
+	body_entered.connect(_on_entered)
 
 func _physics_process(delta: float) -> void:
 	apply_movement(delta)

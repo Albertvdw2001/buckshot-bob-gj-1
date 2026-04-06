@@ -1,8 +1,6 @@
 extends Area2D
 class_name ShotgunShell
 
-@onready var collision: CollisionPolygon2D = $CollisionPolygon2D
-
 @export var movement_speed: float = 500
 @export var damage: int = 20
 

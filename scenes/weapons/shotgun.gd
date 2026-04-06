@@ -5,12 +5,13 @@ extends Node2D
 # this value should be the name of the attack animation connected to the sprite
 @export var shoot_animation: String = "attack"
 @export var default_animation: String = "default"
+@export var reload_animation: String = "reload"
 
 @onready var shell_spawner: Node2D = $ShellSpawner
 @onready var anim_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 var fire_timer: float = 0.0
-@export var amount_shells = 1000000000
+@export var amount_shells = 1
 @export var total_shot_spread: float = 30
 var mouse_pos
 var is_shooting: bool = false
@@ -25,10 +26,11 @@ func _physics_process(delta: float) -> void:
 		shoot()
 
 func shoot():
-	if (not is_shooting) and (anim_sprite.animation != shoot_animation):
-		shoot_shells()
-		is_shooting = true
-		anim_sprite.play(shoot_animation)
+	if (is_shooting) or (anim_sprite.animation == shoot_animation) or (anim_sprite.animation == reload_animation):
+		return
+	shoot_shells()
+	is_shooting = true
+	anim_sprite.play(shoot_animation)
 
 # points shotgun front x to where mouse is and applies vertical flip to avoid being upside down
 func apply_look_point_direction():
@@ -37,6 +39,8 @@ func apply_look_point_direction():
 	anim_sprite.flip_v = relative_mouse_pos.x < 0
 
 func shoot_shells():
+	if amount_shells == 1:
+		spawn_shell()
 	var deg_between_shells = calc_deg_between_shells(amount_shells)
 	var max_angle_offset = 0
 	var min_angle_offset = 0
@@ -80,5 +84,9 @@ func calc_deg_between_shells(amount_shells: int) -> float:
 
 func _on_animation_finished():
 	if anim_sprite.animation == shoot_animation:
-		anim_sprite.play(default_animation)
+		print("switch to reload")
 		is_shooting = false
+		anim_sprite.play(reload_animation)
+	elif anim_sprite.animation == reload_animation:
+		print("switch to default")
+		anim_sprite.play(default_animation)

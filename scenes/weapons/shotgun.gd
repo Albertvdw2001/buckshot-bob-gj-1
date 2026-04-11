@@ -41,6 +41,7 @@ func apply_look_point_direction():
 func shoot_shells():
 	if amount_shells == 1:
 		spawn_shell()
+		return
 	var deg_between_shells = calc_deg_between_shells(amount_shells)
 	var max_angle_offset = 0
 	var min_angle_offset = 0

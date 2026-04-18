@@ -17,7 +17,6 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	enemy_spawn_timer -= delta
-	print(enemy_spawn_timer)
 	if enemy_spawn_timer <= 0:
 		spawn_enemy()
 		enemy_spawn_timer = enemy_spawn_rate

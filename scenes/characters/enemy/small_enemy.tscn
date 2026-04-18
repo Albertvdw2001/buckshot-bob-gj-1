@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://ddoj6w7frfl2j"]
+
+[ext_resource type="Texture2D" uid="uid://dy3r431pa8tjf" path="res://scenes/characters/enemy/eyemonster-small.png" id="1_dkh7a"]
+[ext_resource type="Script" uid="uid://dlxi22wbpb7pk" path="res://scenes/characters/enemy/enemy.gd" id="2_lgrp0"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lgrp0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_dkh7a")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="SmallEnemy" type="CharacterBody2D"]
+script = ExtResource("2_lgrp0")
+num_split = 0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_lgrp0")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-7, -3, -4, -6, 2, -7, 5, -4, 6, -2, 6, -1, 6, 1, 6, 3, 4, 5, 2, 6, 0, 7, -2, 7, -5, 6, -8, 4, -9, 2, -9, -1, -8, -3)

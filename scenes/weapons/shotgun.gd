@@ -81,6 +81,7 @@ func spawn_shell(direction = null):
 func calc_deg_between_shells(amount_shells: int) -> float:
 	#var half = total_shot_spread / 2
 	return total_shot_spread / amount_shells
+	#todo: refine
 
 
 func _on_animation_finished():

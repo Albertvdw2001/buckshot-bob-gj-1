@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://dp773kg3doyma"]
+[gd_scene load_steps=5 format=3 uid="uid://dp773kg3doyma"]
 
 [ext_resource type="Script" uid="uid://dlxi22wbpb7pk" path="res://scenes/characters/enemy/enemy.gd" id="1_7jlhe"]
 [ext_resource type="Texture2D" uid="uid://cp55nmcaawk7o" path="res://scenes/characters/enemy/eyemonster.png" id="1_40cp4"]
+[ext_resource type="PackedScene" uid="uid://drwfvwjvidpq5" path="res://scenes/characters/enemy/medium_enemy.tscn" id="2_uqam8"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_7jlhe"]
 animations = [{
@@ -16,6 +17,7 @@ animations = [{
 
 [node name="LargeEnemy" type="CharacterBody2D"]
 script = ExtResource("1_7jlhe")
+child_size_type = ExtResource("2_uqam8")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_7jlhe")

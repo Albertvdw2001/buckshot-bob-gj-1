@@ -29,6 +29,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	if health <= 0:
+		split()
 		die()
 	move_to_player(delta)
 
@@ -39,6 +40,7 @@ func take_damage(amount: int):
 func die():
 	if anim_sprite.animation != "dead":
 		anim_sprite.animation = "dead"
+	queue_free()
 
 func move_to_player(delta):
 	if not player:
@@ -53,7 +55,11 @@ func split():
 	if not child_size_type:
 		return
 	for i in num_split:
-		var new_child = child_size_type.instantiate() as CharacterBody2D
-		new_child.global_position = global_position # todo: calculation
+		var new_child = child_size_type.instantiate() as Enemy
+		new_child.player = player
+		if i % 2 == 0:
+			new_child.global_position = global_position + Vector2(5, 0) # todo: calculation
+		else:
+			new_child.global_position = global_position - Vector2(5, 0)
 		get_parent().get_tree().current_scene.add_child(new_child)
 	

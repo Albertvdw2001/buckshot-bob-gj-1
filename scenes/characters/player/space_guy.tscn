@@ -1,7 +1,6 @@
-[gd_scene load_steps=14 format=3 uid="uid://cx0yc2x2ha45e"]
+[gd_scene load_steps=13 format=3 uid="uid://cx0yc2x2ha45e"]
 
 [ext_resource type="Texture2D" uid="uid://b2i7pd6yxbpb8" path="res://scenes/characters/player/space_guy_idle.png" id="1_jn623"]
-[ext_resource type="PackedScene" uid="uid://cbwo2w3qu4cv7" path="res://scenes/weapons/shotgun.tscn" id="2_aw007"]
 [ext_resource type="Texture2D" uid="uid://ddf7ywbby4pj" path="res://scenes/characters/player/space_guy_walk.png" id="2_u0b1n"]
 [ext_resource type="Script" uid="uid://c7tixywtxknp6" path="res://scenes/characters/player/player.gd" id="3_aw007"]
 
@@ -76,7 +75,6 @@ animations = [{
 
 [node name="space_guy" type="CharacterBody2D"]
 script = ExtResource("3_aw007")
-ext = ExtResource("2_aw007")
 
 [node name="Body" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_jekh5")

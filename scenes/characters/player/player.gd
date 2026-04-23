@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name Player
 
 # test
 @export var ext: PackedScene
@@ -13,6 +14,7 @@ var move_speed = 5000
 var current_ext
 var mouse_pos
 var has_weapon = false
+var health: int = 1 # this refer to shells but for reuse purposes im calling it health
 
 func _ready() -> void:
 	print("_ready")
@@ -51,7 +53,8 @@ func play_idle_animation():
 func equip_ext(ext_scene: PackedScene):
 	if (current_ext):
 		current_ext.queue_free()
-	current_ext = ext_scene.instantiate()
+	current_ext = ext_scene.instantiate() as Shotgun
+	current_ext.amount_shells = health
 	add_child(current_ext)
 
 
@@ -66,3 +69,15 @@ func apply_body_look_direction():
 			body_sprite.flip_h = true
 		else:
 			body_sprite.flip_h = false
+
+
+func adjust_health(amount: int):
+	health += amount
+	var shotgun = current_ext as Shotgun
+	if shotgun:
+		shotgun.amount_shells = health
+	print('health: ', health)
+
+
+func die():
+	print('dead')

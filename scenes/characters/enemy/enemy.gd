@@ -21,7 +21,7 @@ var size_speed_mapping: Dictionary = {
 @export var health: int = 100
 @export var move_speed: float = 5000
 @export var child_size_type: PackedScene = null
-var player: CharacterBody2D
+var player: Player
 
 func _ready() -> void:
 	move_speed = size_speed_mapping[size]
@@ -35,11 +35,11 @@ func _process(delta: float) -> void:
 
 func take_damage(amount: int):
 	health -= amount
-	print("OUCH. health = ", health)
 
 func die():
 	if anim_sprite.animation != "dead":
 		anim_sprite.animation = "dead"
+	player.adjust_health(1)
 	queue_free()
 
 func move_to_player(delta):

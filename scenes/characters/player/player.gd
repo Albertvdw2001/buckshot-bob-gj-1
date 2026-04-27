@@ -15,6 +15,8 @@ var current_ext
 var mouse_pos
 var has_weapon = false
 var health: int = 1 # this refer to shells but for reuse purposes im calling it health
+var invincibility_timer: float = 0
+var flicker_anim = false
 
 func _ready() -> void:
 	print("_ready")
@@ -22,7 +24,16 @@ func _ready() -> void:
 		equip_ext(ext)
 
 func _physics_process(delta: float) -> void:
+	handle_collision()
+	if invincibility_timer <= 0:
+		invincibility_timer = 0
+	else:
+		if not flicker_anim:
+			play_flicker_anim(0.3)
+		invincibility_timer -= delta
 	has_weapon = current_ext != null
+	if get_amount_shells() <= 0:
+		die()
 	apply_movenent(delta)
 	if (velocity.x != 0 or velocity.y != 0):
 		play_walk_animation()
@@ -70,14 +81,38 @@ func apply_body_look_direction():
 		else:
 			body_sprite.flip_h = false
 
+func get_amount_shells() -> int:
+	if current_ext:
+		var shotgun = current_ext as Shotgun
+		if shotgun:
+			return shotgun.amount_shells
+	return 0
 
-func adjust_health(amount: int):
-	health += amount
-	var shotgun = current_ext as Shotgun
-	if shotgun:
-		shotgun.amount_shells = health
-	print('health: ', health)
-
+func take_damage(amount: int):
+	if current_ext:
+		var shotgun = current_ext as Shotgun
+		if shotgun:
+			shotgun.amount_shells -= amount
 
 func die():
-	print('dead')
+	return
+
+func handle_collision():
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		if collision.get_collider() is Enemy:
+			take_damage(1)
+			start_invincibility_timer(3)
+			
+func start_invincibility_timer(seconds: int):
+	invincibility_timer = seconds
+
+func play_flicker_anim(interval: float):
+	flicker_anim = true
+	if invincibility_timer > 0:
+		visible = false
+		await get_tree().create_timer(interval).timeout
+		visible = true
+		await get_tree().create_timer(interval).timeout
+	flicker_anim = false
+	visible = true

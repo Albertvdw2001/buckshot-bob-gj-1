@@ -13,6 +13,7 @@ class_name Shotgun
 
 var fire_timer: float = 0.0
 @export var amount_shells = 3
+@export var max_shells = 8
 @export var total_shot_spread: float = 30
 var mouse_pos
 var is_shooting: bool = false
@@ -67,6 +68,9 @@ func shoot_shells():
 					min_angle_offset -= deg_between_shells
 					direction = Vector2.RIGHT.rotated(shell_spawner.global_rotation + deg_to_rad(min_angle_offset))
 			spawn_shell(direction)
+
+func inc_shells(amount: int):
+	amount_shells += amount
 
 # spawns ("instantiates") a new instance of object assigned to bullet_scene
 # inside shell_spawnera

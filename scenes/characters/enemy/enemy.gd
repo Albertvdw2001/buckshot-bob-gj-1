@@ -3,19 +3,21 @@ class_name Enemy
 
 enum sizes { LARGE = 0, MEDIUM = 1, SMALL = 2 }
 
-var size_health_mapping: Dictionary = {
+var size_health_map: Dictionary = {
 	0: 100,
 	1: 50,
 	2: 25
 }
 
-var size_speed_mapping: Dictionary = {
+var size_speed_map: Dictionary = {
 	0: 5000,
 	1: 7500,
 	2: 10000
 }
 
+@onready var collision: CollisionPolygon2D = $CollisionPolygon2D
 @onready var anim_sprite: AnimatedSprite2D = $AnimatedSprite2D
+
 @export var size: sizes
 @export var num_split: int = 2
 @export var health: int = 100
@@ -24,8 +26,8 @@ var size_speed_mapping: Dictionary = {
 var player: Player
 
 func _ready() -> void:
-	move_speed = size_speed_mapping[size]
-	health = size_health_mapping[size]
+	move_speed = size_speed_map[size]
+	health = size_health_map[size]
 
 func _process(delta: float) -> void:
 	if health <= 0:
@@ -62,4 +64,3 @@ func split():
 		else:
 			new_child.global_position = global_position - Vector2(5, 0)
 		get_parent().get_tree().current_scene.add_child(new_child)
-	

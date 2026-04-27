@@ -78,10 +78,10 @@ script = ExtResource("3_aw007")
 
 [node name="Body" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_jekh5")
-animation = &"walk"
-frame_progress = 0.726169
+animation = &"idle"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+visible = false
 polygon = PackedVector2Array(-11, -18, 1, -16, 2, -12, 4, -10, 3, -7, 3, -3, 5, -2, 6, 4, 5, 8, 2, 10, -1, 15, -5, 16, -9, 11, -14, 11, -15, 5, -15, -1, -14, -6, -13, -11, -13, -18)
 
 [node name="Camera2D" type="Camera2D" parent="."]

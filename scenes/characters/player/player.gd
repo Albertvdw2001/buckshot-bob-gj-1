@@ -24,9 +24,9 @@ func _ready() -> void:
 		equip_ext(ext)
 
 func _physics_process(delta: float) -> void:
-	handle_collision()
 	if invincibility_timer <= 0:
 		invincibility_timer = 0
+		handle_collision()
 	else:
 		if not flicker_anim:
 			play_flicker_anim(0.3)
@@ -103,16 +103,17 @@ func handle_collision():
 		if collision.get_collider() is Enemy:
 			take_damage(1)
 			start_invincibility_timer(3)
-			
+
 func start_invincibility_timer(seconds: int):
 	invincibility_timer = seconds
 
 func play_flicker_anim(interval: float):
-	flicker_anim = true
-	if invincibility_timer > 0:
-		visible = false
-		await get_tree().create_timer(interval).timeout
+	if invincibility_timer <= 0:
 		visible = true
-		await get_tree().create_timer(interval).timeout
-	flicker_anim = false
+		return
+	flicker_anim = true
+	visible = false
+	await get_tree().create_timer(interval).timeout
 	visible = true
+	await get_tree().create_timer(interval).timeout
+	flicker_anim = false

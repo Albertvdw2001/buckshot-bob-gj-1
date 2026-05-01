@@ -70,7 +70,8 @@ func shoot_shells():
 			spawn_shell(direction)
 
 func inc_shells(amount: int):
-	amount_shells += amount
+	if amount_shells < 8:
+		amount_shells += amount
 
 # spawns ("instantiates") a new instance of object assigned to bullet_scene
 # inside shell_spawnera
@@ -87,7 +88,6 @@ func calc_deg_between_shells(amount_shells: int) -> float:
 	#var half = total_shot_spread / 2
 	return total_shot_spread / amount_shells
 	#todo: refine
-
 
 func _on_animation_finished():
 	if anim_sprite.animation == shoot_animation:

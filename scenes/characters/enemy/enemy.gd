@@ -17,6 +17,7 @@ var size_speed_map: Dictionary = {
 
 @onready var collision: CollisionPolygon2D = $CollisionPolygon2D
 @onready var anim_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var health_bar: ProgressBar = $HealthBar
 
 @export var size: sizes
 @export var num_split: int = 2
@@ -25,23 +26,32 @@ var size_speed_map: Dictionary = {
 @export var child_size_type: PackedScene = null
 var player: Player
 
+var inv_timer: float = 0.7
+
 func _ready() -> void:
 	move_speed = size_speed_map[size]
 	health = size_health_map[size]
+	health_bar.max_value = health
+	set_health_bar(health)
 
 func _process(delta: float) -> void:
+	if inv_timer > 0:
+		inv_timer -= delta
 	if health <= 0:
 		split()
 		die()
 	move_to_player(delta)
 
 func take_damage(amount: int):
+	if inv_timer > 0:
+		return
 	health -= amount
+	set_health_bar(health)
 
 func die():
-	if anim_sprite.animation != "dead":
-		anim_sprite.animation = "dead"
-	player.adjust_health(1)
+	#if anim_sprite.animation != "dead":
+#		anim_sprite.animation = "dead"
+	player.take_damage(-1)
 	queue_free()
 
 func move_to_player(delta):
@@ -64,3 +74,12 @@ func split():
 		else:
 			new_child.global_position = global_position - Vector2(5, 0)
 		get_parent().get_tree().current_scene.add_child(new_child)
+
+func set_health_bar(value: int):
+	if not health_bar:
+		return
+	if value > health_bar.max_value:
+		value = health_bar.max_value
+	if value < health_bar.min_value:
+		value = health_bar.min_value
+	health_bar.value = value

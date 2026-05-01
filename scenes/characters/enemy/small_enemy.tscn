@@ -23,3 +23,11 @@ sprite_frames = SubResource("SpriteFrames_lgrp0")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(-7, -3, -4, -6, 2, -7, 5, -4, 6, -2, 6, -1, 6, 1, 6, 3, 4, 5, 2, 6, 0, 7, -2, 7, -5, 6, -8, 4, -9, 2, -9, -1, -8, -3)
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+offset_left = -21.0
+offset_top = -33.0
+offset_right = 23.0
+offset_bottom = -26.0
+step = 1.0
+show_percentage = false

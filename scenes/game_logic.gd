@@ -24,9 +24,13 @@ func _physics_process(delta: float) -> void:
 func spawn_enemy():
 	var look_direction = player_node.position.normalized()
 	var new_enemy = enemy.instantiate() as Enemy
-	new_enemy.position = Vector2(5,5)
+	new_enemy.position = calc_enemy_spawn_loc()
 	new_enemy.player = player_node
 	new_enemy.look_at(look_direction)
 	get_tree().current_scene.add_child(new_enemy)
 	
-	
+func calc_enemy_spawn_loc() -> Vector2:
+	var spawn_radius = 100  # distance from player
+	var random_angle = randf() * TAU  # TAU = 2*PI, full 360°
+	var offset = Vector2(cos(random_angle), sin(random_angle)) * spawn_radius
+	return player_node.position + offset

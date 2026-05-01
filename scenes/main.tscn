@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://m0hqcka22y6o"]
+[gd_scene load_steps=6 format=3 uid="uid://m0hqcka22y6o"]
 
 [ext_resource type="PackedScene" uid="uid://cx0yc2x2ha45e" path="res://scenes/characters/player/space_guy.tscn" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://cv720jyhc3sdr" path="res://scenes/game_logic.gd" id="1_sugp2"]
 [ext_resource type="PackedScene" uid="uid://dp773kg3doyma" path="res://scenes/characters/enemy/enemy.tscn" id="2_0wfyh"]
 [ext_resource type="PackedScene" uid="uid://cbwo2w3qu4cv7" path="res://scenes/weapons/shotgun.tscn" id="4_jyhfs"]
+[ext_resource type="PackedScene" uid="uid://c548erosoe2t" path="res://scenes/main/background.tscn" id="5_tbgi4"]
 
 [node name="Main" type="Node2D"]
 scale = Vector2(1.03621, 0.994633)
@@ -12,3 +13,5 @@ enemy = ExtResource("2_0wfyh")
 
 [node name="space_guy" parent="." instance=ExtResource("1_ig7tw")]
 ext = ExtResource("4_jyhfs")
+
+[node name="Background" parent="." instance=ExtResource("5_tbgi4")]

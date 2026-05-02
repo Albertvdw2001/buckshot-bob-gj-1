@@ -1,8 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://cx0yc2x2ha45e"]
+[gd_scene load_steps=15 format=3 uid="uid://cx0yc2x2ha45e"]
 
 [ext_resource type="Texture2D" uid="uid://b2i7pd6yxbpb8" path="res://scenes/characters/player/space_guy_idle.png" id="1_jn623"]
 [ext_resource type="Texture2D" uid="uid://ddf7ywbby4pj" path="res://scenes/characters/player/space_guy_walk.png" id="2_u0b1n"]
 [ext_resource type="Script" uid="uid://c7tixywtxknp6" path="res://scenes/characters/player/player.gd" id="3_aw007"]
+[ext_resource type="Texture2D" uid="uid://cn3pct5k3snwl" path="res://icon.svg" id="4_u0b1n"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pb7m2"]
 atlas = ExtResource("1_jn623")
@@ -76,6 +77,7 @@ animations = [{
 [sub_resource type="Theme" id="Theme_jn623"]
 
 [node name="space_guy" type="CharacterBody2D"]
+collision_mask = 15
 script = ExtResource("3_aw007")
 
 [node name="Body" type="AnimatedSprite2D" parent="."]
@@ -92,10 +94,83 @@ zoom = Vector2(2.265, 2.265)
 
 [node name="StaminaBar" type="ProgressBar" parent="."]
 offset_left = -128.0
-offset_top = 112.0
+offset_top = 120.0
 offset_right = 128.0
-offset_bottom = 120.0
+offset_bottom = 128.0
 theme = SubResource("Theme_jn623")
 step = 1.0
 value = 100.0
 show_percentage = false
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer"]
+custom_minimum_size = Vector2(86.115, 0)
+offset_left = 20.0
+offset_top = 26.0
+offset_right = 736.0
+offset_bottom = 96.0
+
+[node name="Heart" type="TextureRect" parent="CanvasLayer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("4_u0b1n")
+expand_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/HBoxContainer/Heart"]
+
+[node name="Heart2" type="TextureRect" parent="CanvasLayer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("4_u0b1n")
+expand_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/HBoxContainer/Heart2"]
+
+[node name="Heart3" type="TextureRect" parent="CanvasLayer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("4_u0b1n")
+expand_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/HBoxContainer/Heart3"]
+
+[node name="Heart4" type="TextureRect" parent="CanvasLayer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("4_u0b1n")
+expand_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/HBoxContainer/Heart4"]
+
+[node name="Heart5" type="TextureRect" parent="CanvasLayer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("4_u0b1n")
+expand_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/HBoxContainer/Heart5"]
+
+[node name="Heart6" type="TextureRect" parent="CanvasLayer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("4_u0b1n")
+expand_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/HBoxContainer/Heart6"]
+
+[node name="Heart7" type="TextureRect" parent="CanvasLayer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("4_u0b1n")
+expand_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/HBoxContainer/Heart7"]
+
+[node name="Heart8" type="TextureRect" parent="CanvasLayer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("4_u0b1n")
+expand_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/HBoxContainer/Heart8"]
+
+[node name="Heart9" type="TextureRect" parent="CanvasLayer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("4_u0b1n")
+expand_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/HBoxContainer/Heart9"]

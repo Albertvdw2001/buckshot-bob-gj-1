@@ -16,8 +16,11 @@ var size_speed_map: Dictionary = {
 }
 
 @onready var collision: CollisionPolygon2D = $CollisionPolygon2D
-@onready var anim_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var anim_sprite: AnimatedSprite2D = $Body/AnimatedSprite2D
 @onready var health_bar: ProgressBar = $HealthBar
+@onready var Body:  Node2D = $Body
+var hb_rel_x: float
+var hb_rel_y: float
 
 @export var size: sizes
 @export var num_split: int = 2
@@ -60,7 +63,7 @@ func move_to_player(delta):
 		return
 	var direction = (player.global_position - global_position).normalized()
 	velocity = direction * move_speed * delta
-	look_at(direction)
+	Body.look_at(direction)
 	move_and_slide()
 
 func split():

@@ -15,3 +15,5 @@ enemy = ExtResource("2_0wfyh")
 ext = ExtResource("4_jyhfs")
 
 [node name="Background" parent="." instance=ExtResource("5_tbgi4")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]

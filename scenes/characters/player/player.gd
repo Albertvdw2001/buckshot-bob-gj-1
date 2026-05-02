@@ -6,6 +6,9 @@ class_name Player
 # Objects
 @onready var body_sprite = $Body
 @onready var stamina_bar: ProgressBar = $StaminaBar
+@onready var shells_bar: HBoxContainer = $CanvasLayer/HBoxContainer
+var shells_children: Array[Node]
+var game: GameLogic
 
 # global params
 var move_speed = 5000
@@ -34,6 +37,9 @@ var dash_stamina_cost: int = 30
 func _ready() -> void:
 	if ext:
 		equip_ext(ext)
+	shells_children = shells_bar.get_children()
+	update_shells_bar(1)
+	game = get_parent() as GameLogic
 
 func _physics_process(delta: float) -> void:
 	if invincibility_timer <= 0:
@@ -48,13 +54,13 @@ func _physics_process(delta: float) -> void:
 	 
 	if get_amount_shells() <= 0:
 		die()
-		
+
 	if not is_dodging and dash_cooldown_time <= 0:
 		stamina_refill_ticker += delta
 		if stamina_refill_ticker >= 0.2:
 			set_stamina(stamina + stamina_refill_per_200ms)
 	apply_movenent(delta)
-	
+
 	if (velocity.x != 0 or velocity.y != 0):
 		play_walk_animation()
 	else:
@@ -64,9 +70,15 @@ func _input(event):
 	if event.is_action_pressed("dash") and not is_dashing:
 		start_dash()
 
+func update_shells_bar(amount: int):
+	if amount > 8:
+		amount = 8
+	if amount < 0:
+		amount = 0
+	for i in range(shells_children.size()):
+		shells_children[i].visible = i < amount
 
 func apply_movenent(delta: float):
-	print(is_dashing)
 	if has_weapon:
 		mouse_pos = get_local_mouse_position()
 	if dash_cooldown_time > 0:
@@ -80,7 +92,6 @@ func apply_movenent(delta: float):
 			dash_cooldown_time = 3
 			is_dashing = false
 	else:
-		print(dash_direction)
 		var x_move = Input.get_axis("ui_left", "ui_right") * move_speed * delta
 		var y_move = Input.get_axis("ui_up", "ui_down") * move_speed * delta
 		velocity = Vector2(x_move, y_move)
@@ -126,13 +137,18 @@ func get_amount_shells() -> int:
 	return 0
 
 func take_damage(amount: int):
-	if current_ext:
-		var shotgun = current_ext as Shotgun
-		if shotgun:
-			shotgun.amount_shells -= amount
+	if not current_ext:
+		return
+	var shotgun = current_ext as Shotgun
+	if shotgun:
+		if shotgun.amount_shells == 0 or shotgun.amount_shells == 8:
+			return
+		shotgun.amount_shells -= amount
+		game.on_player_shells_changed(shotgun.amount_shells)
+		update_shells_bar(shotgun.amount_shells)
 
 func die():
-	return
+	game.on_player_death()
 
 func handle_collision():
 	for i in get_slide_collision_count():

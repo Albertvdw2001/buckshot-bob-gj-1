@@ -1,8 +1,9 @@
 extends Node2D
-
 class_name GameLogic
 
 @onready var player_node: Player = $space_guy
+@onready var score_manager: ScoreManager = $ScoreManager
+@onready var score_lbl: Label = $CanvasLayer/Label
 
 @export var enemy: PackedScene
 
@@ -17,7 +18,6 @@ func _ready() -> void:
 	enemy_spawn_timer = enemy_spawn_rate
 
 func _physics_process(delta: float) -> void:
-	print(player_node.get_amount_shells())
 	enemy_spawn_timer -= delta
 	if enemy_spawn_timer <= 0:
 		for i in range(enemy_spawn_amount):
@@ -40,4 +40,10 @@ func on_player_shells_changed(amount_shells: int):
 	enemy_spawn_amount = amount_shells
 
 func on_player_death():
-	get_tree().reload_current_scene()
+	if score > score_manager.high_score:
+		score_manager.update_score(score)
+	get_tree().change_scene_to_file("res://scenes/main_menu/main_menu.tscn")
+	
+func add_score(amount: int):
+	score += amount
+	score_lbl.text = str(score)

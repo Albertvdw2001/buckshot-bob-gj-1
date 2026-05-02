@@ -1,9 +1,9 @@
 extends Area2D
 class_name ShotgunShell
 
-@export var movement_speed: float = 500
+@export var movement_speed: float = 1000
 @export var damage: int = 30
-var timer
+var timer: float = 0
 var lifespan_sec: float = 4
 
 var direction: Vector2 = Vector2.RIGHT

@@ -1,10 +1,9 @@
-[gd_scene load_steps=17 format=3 uid="uid://cbwo2w3qu4cv7"]
+[gd_scene load_steps=16 format=3 uid="uid://cbwo2w3qu4cv7"]
 
 [ext_resource type="Texture2D" uid="uid://c6l04n0ux6s4m" path="res://scenes/weapons/shotgun_fire.png" id="1_0frcf"]
 [ext_resource type="Script" uid="uid://b80b8dg0nbuwx" path="res://scenes/weapons/shotgun.gd" id="1_278ir"]
 [ext_resource type="Texture2D" uid="uid://dp25t1gma0vrl" path="res://scenes/weapons/shotgun_ext.png" id="1_lbead"]
 [ext_resource type="PackedScene" uid="uid://datrl2aw0jcxa" path="res://scenes/projectiles/shotgun_shell.tscn" id="2_uukpr"]
-[ext_resource type="Texture2D" uid="uid://cn3pct5k3snwl" path="res://icon.svg" id="5_qn8fy"]
 [ext_resource type="Texture2D" uid="uid://dnv7y5iktq4aj" path="res://scenes/weapons/shotgun_ext-Sheet-export.png" id="5_xtykv"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_278ir"]
@@ -99,7 +98,3 @@ sprite_frames = SubResource("SpriteFrames_278ir")
 
 [node name="ShellSpawner" type="Node2D" parent="."]
 position = Vector2(19, -3)
-
-[node name="Sprite2D" type="Sprite2D" parent="ShellSpawner"]
-scale = Vector2(0.01, 0.01)
-texture = ExtResource("5_qn8fy")

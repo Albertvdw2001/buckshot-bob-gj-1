@@ -21,6 +21,7 @@ var health: int = 1
 var invincibility_timer: float = 0
 var flicker_anim = false
 var is_dodging = false
+var invincibility_sec: float = 1
 
 # dash mechanic
 var dash_speed = 600
@@ -42,6 +43,7 @@ func _ready() -> void:
 	game = get_parent() as GameLogic
 
 func _physics_process(delta: float) -> void:
+	print(get_amount_shells())
 	if invincibility_timer <= 0:
 		invincibility_timer = 0
 		handle_collision()
@@ -141,9 +143,14 @@ func take_damage(amount: int):
 		return
 	var shotgun = current_ext as Shotgun
 	if shotgun:
-		if shotgun.amount_shells == 0 or shotgun.amount_shells == 8:
+		if shotgun.amount_shells == 0:
 			return
-		shotgun.amount_shells -= amount
+		var new_amount = shotgun.amount_shells - amount
+		if new_amount == 0:
+			die()
+		elif new_amount > 8:
+			return
+		shotgun.amount_shells = new_amount
 		game.on_player_shells_changed(shotgun.amount_shells)
 		update_shells_bar(shotgun.amount_shells)
 
@@ -155,7 +162,7 @@ func handle_collision():
 		var collision = get_slide_collision(i)
 		if collision.get_collider() is Enemy:
 			take_damage(1)
-			start_invincibility_timer(3)
+			start_invincibility_timer(invincibility_sec)
 
 func start_invincibility_timer(seconds: int):
 	invincibility_timer = seconds

@@ -25,15 +25,19 @@ var hb_rel_y: float
 @export var size: sizes
 @export var num_split: int = 2
 @export var health: int = 100
+var max_health: int = 100
 @export var move_speed: float = 5000
 @export var child_size_type: PackedScene = null
 var player: Player
+var game: GameLogic
 
 var inv_timer: float = 0.7
 
 func _ready() -> void:
+	game = get_parent() as GameLogic
 	move_speed = size_speed_map[size]
 	health = size_health_map[size]
+	max_health = health
 	health_bar.max_value = health
 	set_health_bar(health)
 
@@ -55,6 +59,7 @@ func die():
 	#if anim_sprite.animation != "dead":
 #		anim_sprite.animation = "dead"
 	player.take_damage(-1)
+	game.add_score(max_health)
 	queue_free()
 
 func move_to_player(delta):

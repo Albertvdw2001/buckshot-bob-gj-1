@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://b2i7pd6yxbpb8" path="res://scenes/characters/player/space_guy_idle.png" id="1_jn623"]
 [ext_resource type="Texture2D" uid="uid://ddf7ywbby4pj" path="res://scenes/characters/player/space_guy_walk.png" id="2_u0b1n"]
 [ext_resource type="Script" uid="uid://c7tixywtxknp6" path="res://scenes/characters/player/player.gd" id="3_aw007"]
-[ext_resource type="Texture2D" uid="uid://cn3pct5k3snwl" path="res://icon.svg" id="4_u0b1n"]
+[ext_resource type="Texture2D" uid="uid://xyf53yepx2m" path="res://scenes/characters/player/shell.png" id="4_u0b1n"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pb7m2"]
 atlas = ExtResource("1_jn623")
@@ -107,11 +107,11 @@ show_percentage = false
 layer = 5
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer"]
-custom_minimum_size = Vector2(86.115, 0)
+custom_minimum_size = Vector2(-100, 0)
 offset_left = 20.0
 offset_top = 26.0
-offset_right = 736.0
-offset_bottom = 96.0
+offset_right = 970.0
+offset_bottom = 128.0
 
 [node name="Heart" type="TextureRect" parent="CanvasLayer/HBoxContainer"]
 layout_mode = 2

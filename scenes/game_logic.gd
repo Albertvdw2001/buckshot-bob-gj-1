@@ -31,7 +31,7 @@ func spawn_enemy():
 	get_tree().current_scene.add_child(new_enemy)
 	
 func calc_enemy_spawn_loc() -> Vector2:
-	var spawn_radius = randi_range(100, 3000)  # distance from player
+	var spawn_radius = randi_range(100, player_node.get_amount_shells() * 300)  # distance from player
 	var random_angle = randf() * TAU  # TAU = 2*PI, full 360°
 	var offset = Vector2(cos(random_angle), sin(random_angle)) * spawn_radius
 	return player_node.position + offset

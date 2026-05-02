@@ -17,6 +17,7 @@ animations = [{
 [node name="SmallEnemy" type="CharacterBody2D"]
 collision_layer = 8
 script = ExtResource("2_lgrp0")
+size = 2
 num_split = 0
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]

@@ -43,7 +43,6 @@ func _ready() -> void:
 	game = get_parent() as GameLogic
 
 func _physics_process(delta: float) -> void:
-	print(get_amount_shells())
 	if invincibility_timer <= 0:
 		invincibility_timer = 0
 		handle_collision()

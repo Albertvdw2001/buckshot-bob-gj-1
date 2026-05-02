@@ -18,6 +18,8 @@ var fire_timer: float = 0.0
 var mouse_pos
 var is_shooting: bool = false
 
+var is_disabled: bool = false
+
 
 func _ready() -> void:
 	anim_sprite.animation_finished.connect(_on_animation_finished)

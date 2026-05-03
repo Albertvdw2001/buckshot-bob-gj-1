@@ -52,9 +52,6 @@ func _physics_process(delta: float) -> void:
 		invincibility_timer -= delta
 		
 	has_weapon = current_ext != null
-	 
-	if get_amount_shells() <= 0:
-		die()
 
 	if not is_dodging and dash_cooldown_time <= 0:
 		stamina_refill_ticker += delta

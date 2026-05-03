@@ -27,10 +27,10 @@ child_size_type = ExtResource("2_fq6l8")
 polygon = PackedVector2Array(-12, -4, -9, -9, -6, -10, -3, -12, 3, -13, 7, -12, 11, -8, 14, -4, 15, -1, 14, 3, 13, 6, 9, 10, 4, 12, -4, 12, -9, 9, -13, 6, -14, -1)
 
 [node name="HealthBar" type="ProgressBar" parent="."]
-offset_left = -21.0
-offset_top = -33.0
-offset_right = 23.0
-offset_bottom = -26.0
+offset_left = -13.0
+offset_top = -24.0
+offset_right = 14.0
+offset_bottom = -17.0
 step = 1.0
 show_percentage = false
 
